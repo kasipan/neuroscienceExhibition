@@ -30,9 +30,9 @@ void setup() {
 void draw() {
   background(150);
 
-  noFill();
-  stroke(255, 255, 255, 30);
-  sphere(radius);
+  //noFill();
+  //stroke(255, 255, 255, 30);
+  //sphere(radius);
 
   degree_x += speed;
   degree_y += speed;
