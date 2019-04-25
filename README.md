@@ -1,1 +1,1 @@
-# neurosicenceExhibiton
+# neuroscienceExhibition
