@@ -1,9 +1,9 @@
 import peasy.*;
 
 PeasyCam cam;
-float cube_w = 80;
-float cube_h = 80;
-float cube_d = 80;
+float cube_w = 10;
+float cube_h = 10;
+float cube_d = 10;
 int gridsNum = 8;
 float margin = cube_d / gridsNum;
 
@@ -11,6 +11,9 @@ color red = color(250, 150, 150);
 color green = color(150, 250, 150);
 color blue = color(150, 150, 250);
 color purple = color(250, 150, 250);
+
+
+int red1,blue1,green1;
 
 float degree_x, degree_y;
 float radius = 200;
@@ -21,6 +24,7 @@ float x_noise, y_noise;
 //ArrayList<PVector> points = new ArrayList<PVector>();
 //float[][] points = {{0,0}};
 ArrayList<float[]> points = new ArrayList<float[]>();
+float x_coord, y_coord, z_coord;
 
 
 
@@ -37,75 +41,51 @@ void setup() {
 
 
 void draw() {
-  background(150);
-
-  //noFill();
-  //stroke(255, 255, 255, 30);
-  //sphere(radius);
-
-  degree_x += rotateSpeed_X+noise(x_noise)-0.5;
-  degree_y += rotateSpeed_Y+noise(y_noise)-0.5;
-  
+  background(255);
+  degree_x += (rotateSpeed_X)+noise(x_noise)-0.5;
+  degree_y += (rotateSpeed_Y)+noise(y_noise)-0.5;
+  red1++;
+  blue1++;
+  green1++;
   x_noise += random(0.1);
   y_noise += random(0.1);
-  drawGrid(degree_x, degree_y);
   drawTrace(degree_x, degree_y);
+  drawGrid();
 }
 
 
 
-void drawGrid(float degree_x, float degree_y) {
-  pushMatrix();
-  rotateX(radians(degree_x));
-  rotateY(radians(degree_y));  
-  translate(0, 0, radius);
-  noFill();
+void drawGrid() {
 
-  // x axis
   stroke(red);
-  line(0, 0, 0, cube_w, 0, 0);
+  line(x_coord, y_coord, z_coord, x_coord+cube_w, y_coord, z_coord);
 
   // y axis
   stroke(green);
-  line(0, 0, 0, 0, cube_h, 0);
+  line(x_coord, y_coord, z_coord, x_coord, y_coord+cube_h, z_coord);
 
   // z axis
+  strokeWeight(2);
   stroke(blue);
-  line(0, 0, 0, 0, 0, cube_w);
-
-
-  // human simulation
-  rotateY(-radians(degree_y));  // fixed position
-  rotateX(-radians(degree_x));  
-  stroke(255);
-  fill(0, 0, 0, 20);
-  box(6, 30, 6);  // body
-  translate(0, 15, 0);
-  stroke(0, 20);
-  sphere(5);
-
-  popMatrix();
+  line(x_coord, y_coord, z_coord, x_coord, y_coord, z_coord+cube_w);
 }
 
-
 void drawTrace(float degree_x, float degree_y) {
-  //float[][] f = {{degree_x, degree_y}};
   points.add(new float[]{degree_x, degree_y});
   //println("-----");
-  //beginShape();
+  beginShape();
   for (float[] p : points) {
-    //println(p);
 
-    pushMatrix();
-    rotateX(radians(p[0]));  //degree_x
-    rotateY(radians(p[1]));  //degree_y
-    translate(0, 0, radius);
-    fill(255);
-    stroke(255);
-    box(1);
-    //vertex(0,0,0);
-    popMatrix();
+    x_coord=radius*sin(radians(p[0]))*cos(radians(p[1]));
+    y_coord=radius*sin(radians(p[0]))*sin(radians(p[1]));
+    z_coord=radius*cos(radians(p[0]));
+    //println(x_coord, y_coord, z_coord);
+    noFill();
+    //stroke(red1, 0, 0);
+    //point(x_coord, y_coord, z_coord);
+    stroke(255,0,0,100);
+    vertex(x_coord, y_coord, z_coord);
   }
-  //endShape();
+  endShape();
   //println("-----");
 }
