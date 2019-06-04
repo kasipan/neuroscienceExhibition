@@ -8,7 +8,7 @@ import oscP5.*;
 import netP5.*;
 
 OscP5 oscP5;
-String viewerIP = "172.20.10.8";    // Viewer's IP
+String viewerIP = "127.0.0.1";    // Viewer's IP
 
 int spacing=100;
 int edgeLength=1400;
